@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ASTY CABIN - Interior Design Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a2340;
+  --navy-light: #243054;
+  --navy-dark: #111a30;
+  --accent: #e74c3c;
+  --accent-light: #ff6b6b;
+  --gold: #c9a96e;
+  --gold-light: #dfc08a;
+  --white: #ffffff;
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-800: #343a40;
+  --type-a: #b8cce4;
+  --type-b: #c4a0a0;
+  --type-c: #d5c4e0;
+  --type-d: #a0b8a0;
+  --type-e: #e4c8b8;
+  --type-f: #f0d8a8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--gray-800);
+  background: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--navy-dark); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ===== LOADING SCREEN ===== */
+.loading-screen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.loading-screen h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--white);
+  letter-spacing: 8px;
+  margin-bottom: 8px;
+}
+.loading-screen p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: var(--gold);
+  letter-spacing: 4px;
+}
+.loading-bar {
+  width: 120px;
+  height: 2px;
+  background: rgba(255,255,255,0.1);
+  margin-top: 30px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.loading-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--gold);
+  animation: loadBar 1.5s ease forwards;
+}
+@keyframes loadBar {
+  to { width: 100%; }
+}
+
+/* ===== NAVIGATION ===== */
+.nav-bar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+.nav-bar.scrolled {
+  background: rgba(26, 35, 64, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 12px 20px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.nav-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--white);
+  letter-spacing: 3px;
+}
+.nav-logo span {
+  color: var(--gold);
+  font-size: 0.6rem;
+  display: block;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+.menu-btn {
+  width: 28px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 1001;
+}
+.menu-btn span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--white);
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+.menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+.menu-btn.active span:nth-child(2) { opacity: 0; }
+.menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--navy);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+.mobile-menu.active {
+  opacity: 1;
+  visibility: visible;
+}
+.mobile-menu a {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--white);
+  text-decoration: none;
+  padding: 14px 0;
+  letter-spacing: 2px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+.mobile-menu.active a {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu a:nth-child(5) { transition-delay: 0.3s; }
+.mobile-menu a:nth-child(6) { transition-delay: 0.35s; }
+.mobile-menu a:hover { color: var(--gold); }
+
+/* ===== HERO SECTION ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  background: var(--navy);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 24px 80px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 50%, var(--navy) 100%);
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(201,169,110,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(201,169,110,0.05) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+.hero-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.8s forwards;
+}
+.hero h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 3.2rem;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: fadeUp 0.8s 2s forwards;
+}
+.hero h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 4px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s 2.2s forwards;
+}
+.hero-desc {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  max-width: 300px;
+  opacity: 0;
+  animation: fadeUp 0.8s 2.4s forwards;
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeUp 0.8s 2.6s forwards;
+}
+.hero-scroll span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 3px;
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SECTION STYLES ===== */
+.section {
+  padding: 80px 20px;
+}
+.section-dark {
+  background: var(--navy);
+  color: var(--white);
+}
+.section-light {
+  background: var(--gray-100);
+}
+.section-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 0.65rem;
+  color: var(--gold);
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+.section-title-dark { color: var(--white); }
+.section-desc {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--gray-600);
+  margin-bottom: 32px;
+}
+.section-desc-light {
+  color: rgba(255,255,255,0.6);
+}
+
+/* ===== OVERVIEW ===== */
+.overview-grid {
+  display: grid;
+  gap: 1px;
+  background: var(--gray-200);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 24px;
+}
+.overview-item {
+  background: var(--white);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.overview-item .label {
+  font-size: 0.8rem;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+.overview-item .value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-align: right;
+}
+.overview-highlight {
+  background: var(--navy) !important;
+}
+.overview-highlight .label,
+.overview-highlight .value {
+  color: var(--white) !important;
+}
+.overview-highlight .value {
+  color: var(--gold) !important;
+}
+
+/* ===== SITE ANALYSIS ===== */
+.transport-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+.transport-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+.transport-card:hover {
+  border-color: var(--gold);
+  background: rgba(201,169,110,0.05);
+}
+.transport-card .tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+.transport-card h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.transport-card ul {
+  list-style: none;
+}
+.transport-card ul li {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+  padding-left: 14px;
+  position: relative;
+}
+.transport-card ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 50%;
+}
+
+/* Distance badges */
+.distance-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.distance-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.distance-badge .place {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+.distance-badge .time {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* ===== TARGET ANALYSIS ===== */
+.target-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+.target-card {
+  border-radius: 16px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.target-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  opacity: 0.08;
+}
+.target-card.traveler {
+  background: linear-gradient(135deg, #2d3a5e, #1a2340);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.target-card.traveler::before { background: #4a90d9; }
+.target-card.medical {
+  background: linear-gradient(135deg, #3a2d4e, #241a40);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.target-card.medical::before { background: #9b59b6; }
+.target-card.worker {
+  background: linear-gradient(135deg, #2d4a3a, #1a3024);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.target-card.worker::before { background: #27ae60; }
+
+.target-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+.target-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--white);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.target-card p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+.target-quote {
+  font-size: 0.78rem;
+  color: var(--gold-light);
+  font-style: italic;
+  padding-left: 12px;
+  border-left: 2px solid var(--gold);
+  line-height: 1.6;
+}
+
+/* ===== STACKING PLAN ===== */
+.stacking-visual {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stack-floor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 4px;
+}
+.stack-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.5);
+  width: 50px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.stack-bar {
+  flex: 1;
+  height: 36px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+.stack-bar::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 100%);
+}
+.stack-rooftop { background: linear-gradient(90deg, #c9a96e, #dfc08a); width: 60%; }
+.stack-room { background: linear-gradient(90deg, #e74c3c, #ff6b6b); min-height: 160px; border-radius: 8px; flex-direction: column; justify-content: center; }
+.stack-room .floor-range { font-family: 'Montserrat'; font-size: 1.4rem; font-weight: 900; }
+.stack-room .floor-desc { font-size: 0.7rem; opacity: 0.8; margin-top: 4px; }
+.stack-lobby { background: linear-gradient(90deg, #5b7db1, #7b9dd1); }
+.stack-amenity { background: linear-gradient(90deg, #8e6fad, #a98fc4); }
+.stack-parking { background: linear-gradient(90deg, #555, #777); min-height: 80px; flex-direction: column; justify-content: center; }
+
+/* ===== PUBLIC SPACES ===== */
+.space-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.space-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.space-card .floor-tag {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+.space-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.space-chip {
+  padding: 6px 14px;
+  background: var(--gray-100);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--navy);
+}
+.space-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+.space-table th {
+  background: var(--navy);
+  color: var(--white);
+  padding: 10px 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: left;
+}
+.space-table th:first-child { border-radius: 8px 0 0 0; }
+.space-table th:last-child { border-radius: 0 8px 0 0; }
+.space-table td {
+  padding: 10px 12px;
+  font-size: 0.78rem;
+  border-bottom: 1px solid var(--gray-200);
+}
+.space-table tr:last-child td {
+  font-weight: 700;
+  color: var(--navy);
+  background: var(--gray-100);
+}
+
+/* ===== ROOM TYPES ===== */
+.room-type-nav {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 4px 0 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.room-type-nav::-webkit-scrollbar { display: none; }
+.room-type-btn {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 1.5px solid var(--gray-300);
+  background: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+}
+.room-type-btn.active {
+  background: var(--navy);
+  color: var(--white);
+  border-color: var(--navy);
+}
+
+.room-panels { margin-top: 8px; }
+.room-panel {
+  display: none;
+}
+.room-panel.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.room-header h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.6rem;
+  color: var(--navy);
+}
+.room-meta {
+  text-align: right;
+}
+.room-meta .area {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--navy);
+}
+.room-meta .count {
+  font-size: 0.75rem;
+  color: var(--gray-600);
+  margin-top: 2px;
+}
+
+.room-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.room-tag {
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.room-tag.people {
+  background: var(--navy);
+  color: var(--white);
+}
+.room-tag.traveler { background: #e8f0fe; color: #1a73e8; }
+.room-tag.medical { background: #fce8e8; color: #d93025; }
+.room-tag.living { background: #e8f5e9; color: #1b8a2e; }
+
+.room-spec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.room-spec {
+  background: var(--gray-100);
+  border-radius: 10px;
+  padding: 14px;
+}
+.room-spec .num {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.room-spec .name {
+  font-size: 0.73rem;
+  color: var(--gray-600);
+  line-height: 1.4;
+}
+
+.room-zones {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.room-zone {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+}
+.room-zone.relax {
+  background: linear-gradient(135deg, #ffeef0, #fff5f5);
+  border: 1px solid #ffd4d8;
+}
+.room-zone.living-zone {
+  background: linear-gradient(135deg, #eef4ff, #f5f8ff);
+  border: 1px solid #d4e0ff;
+}
+.room-zone .zone-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.room-zone.relax .zone-label { color: #e74c3c; }
+.room-zone.living-zone .zone-label { color: #3b82f6; }
+.room-zone .zone-items {
+  font-size: 0.72rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+/* ===== AREA PLAN SUMMARY ===== */
+.area-summary {
+  margin-top: 24px;
+}
+.area-total {
+  text-align: center;
+  padding: 20px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+.area-total .num {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+  color: var(--gold);
+}
+.area-total .unit {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+}
+.area-type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.area-type-card {
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+}
+.area-type-card .type-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.area-type-card .type-info {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+}
+.area-type-card .type-count {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--gold);
+  margin-top: 4px;
+}
+
+/* ===== APPENDIX ===== */
+.appendix-category {
+  margin-bottom: 32px;
+}
+.appendix-category h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.appendix-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.appendix-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+.appendix-item .item-icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+.appendix-item .item-name {
+  font-size: 0.78rem;
+  color: var(--white);
+  font-weight: 600;
+}
+.appendix-item .item-desc {
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.4);
+  margin-top: 4px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--navy-dark);
+  padding: 40px 20px;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: var(--white);
+  letter-spacing: 4px;
+  margin-bottom: 4px;
+}
+.footer-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  color: var(--gold);
+  letter-spacing: 3px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.footer-info {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+  line-height: 1.8;
+}
+.footer-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  margin: 20px auto;
+  opacity: 0.3;
+}
+.footer-copy {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.2);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider {
+  width: 40px;
+  height: 3px;
+  background: var(--gold);
+  margin-bottom: 24px;
+  border-radius: 3px;
+}
+.section-divider-light {
+  background: var(--navy);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 480px) {
+  .hero h1 { font-size: 4rem; }
+  .section { padding: 100px 28px; }
+  .section-title { font-size: 2.4rem; }
+}
+
+@media (min-width: 768px) {
+  .hero h1 { font-size: 5rem; }
+  .section { padding: 120px 40px; }
+  .room-spec-grid { grid-template-columns: repeat(4, 1fr); }
+  .area-type-grid { grid-template-columns: repeat(4, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <h1>ASTY CABIN</h1>
+  <p>INTERIOR DESIGN</p>
+  <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+</div>
+
+<!-- Navigation -->
+<nav class="nav-bar" id="navbar">
+  <div class="nav-logo">ASTY CABIN<span>CARAMEL LOUNGE</span></div>
+  <div class="menu-btn" id="menuBtn">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#overview" onclick="closeMenu()">OVERVIEW</a>
+  <a href="#site" onclick="closeMenu()">SITE ANALYSIS</a>
+  <a href="#target" onclick="closeMenu()">TARGET</a>
+  <a href="#stacking" onclick="closeMenu()">STACKING PLAN</a>
+  <a href="#public" onclick="closeMenu()">PUBLIC SPACES</a>
+  <a href="#rooms" onclick="closeMenu()">ACCOMMODATION</a>
+</div>
+
+<!-- Hero Section -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">ISSUE NO.03 &middot; JANUARY 2026</div>
+    <h1>ASTY<br>CABIN</h1>
+    <h2>INTERIOR DESIGN PROPOSAL</h2>
+    <p class="hero-desc">Caramel Lounge offers one-stop total space management solution from consultation to fulfillment.</p>
+  </div>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Overview -->
+<section class="section" id="overview">
+  <div class="reveal">
+    <div class="section-label">01</div>
+    <h2 class="section-title">OVERVIEW</h2>
+    <div class="section-divider section-divider-light"></div>
+    <p class="section-desc">서울특별시 송파구 가락동에 위치한 하이엔드 레지던스.<br>지상 18층, 187실 규모의 목적형 오피스텔.</p>
+    <div class="overview-grid">
+      <div class="overview-item">
+        <span class="label">대지 위치</span>
+        <span class="value">서울 송파구 가락동 99번지</span>
+      </div>
+      <div class="overview-item">
+        <span class="label">대지 면적</span>
+        <span class="value">1,167.6 m² (353.2PY)</span>
+      </div>
+      <div class="overview-item">
+        <span class="label">건축 면적</span>
+        <span class="value">688.2 m² (208.2PY)</span>
+      </div>
+      <div class="overview-item">
+        <span class="label">연면적 (지상)</span>
+        <span class="value">11,165.4 m²</span>
+      </div>
+      <div class="overview-item">
+        <span class="label">연면적 (지하)</span>
+        <span class="value">5,762.5 m²</span>
+      </div>
+      <div class="overview-item">
+        <span class="label">건폐율 / 용적률</span>
+        <span class="value">58.94% / 956.27%</span>
+      </div>
+      <div class="overview-highlight overview-item">
+        <span class="label">규모</span>
+        <span class="value">지상 18층 / 지하 8층</span>
+      </div>
+      <div class="overview-highlight overview-item">
+        <span class="label">세대수</span>
+        <span class="value">187실</span>
+      </div>
+      <div class="overview-item">
+        <span class="label">용도</span>
+        <span class="value">오피스텔, 근린생활시설</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Site Analysis -->
+<section class="section section-dark" id="site">
+  <div class="reveal">
+    <div class="section-label">02</div>
+    <h2 class="section-title section-title-dark">SITE<br>ANALYSIS</h2>
+    <div class="section-divider"></div>
+    <p class="section-desc section-desc-light">서울 동남권의 모든 수요가 교차하는 '전략적 요충지'</p>
+
+    <div class="transport-cards">
+      <div class="transport-card">
+        <span class="tag">TRANSPORT</span>
+        <h4>교통</h4>
+        <ul>
+          <li>3호선, 8호선 가락시장역 더블 역세권</li>
+          <li>SRT 수서역 인접 - 지방 거주 수요 흡수 최적지</li>
+          <li>강남(업무), 잠실(관광), 판교(IT) 10~20분 내 연결</li>
+        </ul>
+      </div>
+      <div class="transport-card">
+        <span class="tag">DEMAND</span>
+        <h4>복합 수요</h4>
+        <ul>
+          <li>삼성서울병원, 서울아산병원 접근성 우수</li>
+          <li>문정 법조단지, 강남 업무지구(GBD) 출퇴근 용이</li>
+          <li>롯데월드, 석촌호수 등 잠실 관광 특구 10분 거리</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="distance-row">
+      <div class="distance-badge">
+        <span class="place">수서역</span>
+        <span class="time">2min</span>
+      </div>
+      <div class="distance-badge">
+        <span class="place">잠실역</span>
+        <span class="time">5min</span>
+      </div>
+      <div class="distance-badge">
+        <span class="place">대치역</span>
+        <span class="time">10min</span>
+      </div>
+      <div class="distance-badge">
+        <span class="place">삼성역</span>
+        <span class="time">20min</span>
+      </div>
+      <div class="distance-badge">
+        <span class="place">판교</span>
+        <span class="time">27min</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Target Analysis -->
+<section class="section" id="target">
+  <div class="reveal">
+    <div class="section-label">03</div>
+    <h2 class="section-title">TARGET<br>ANALYSIS</h2>
+    <div class="section-divider section-divider-light"></div>
+    <p class="section-desc">여행객에게는 합리적인 숙박시설을, 환자에게는 편안한 치유를, 직장인에게는 효율을 제공하는 <strong>'목적형 하이엔드 레지던스'</strong></p>
+
+    <div class="target-cards">
+      <div class="target-card traveler">
+        <div class="target-icon">✈</div>
+        <h3>URBAN TRAVELER</h3>
+        <p>롯데월드, 석촌호수 등 잠실 관광권역을 즐기며 쇼핑과 휴식을 병행하는 2030 여행객 및 장기 투숙객</p>
+        <div class="target-quote">"잠실/강남 호텔은 너무 비싸고, 모텔은 감성이 부족하다."</div>
+      </div>
+      <div class="target-card medical">
+        <div class="target-icon">🏥</div>
+        <h3>MEDICAL CARE</h3>
+        <p>삼성서울병원, 서울아산병원 등으로 정기 통원 치료를 받는 지방 거주 환자 및 보호자 (SRT 수서역 접근성 필수)</p>
+        <div class="target-quote">"호텔은 취사가 안 돼서 불편하고, 모텔은 위생이 불안하다."</div>
+      </div>
+      <div class="target-card worker">
+        <div class="target-icon">💼</div>
+        <h3>WORKER</h3>
+        <p>문정 법조단지, GBD(강남), 판교 등으로 출퇴근하며 숙박이 필요한 직장인</p>
+        <div class="target-quote">"노트북 작업이 가능한 데스크 환경, 정장 관리를 위한 스타일러, 고속 와이파이"</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stacking Plan -->
+<section class="section section-dark" id="stacking">
+  <div class="reveal">
+    <div class="section-label">04</div>
+    <h2 class="section-title section-title-dark">STACKING<br>PLAN</h2>
+    <div class="section-divider"></div>
+
+    <div class="stacking-visual">
+      <div class="stack-floor">
+        <span class="stack-label">ROOF</span>
+        <div class="stack-bar stack-rooftop">ROOFTOP</div>
+      </div>
+      <div class="stack-floor">
+        <span class="stack-label">2F-18F</span>
+        <div class="stack-bar stack-room">
+          <span class="floor-range">ROOM</span>
+          <span class="floor-desc">187실 객실</span>
+        </div>
+      </div>
+      <div class="stack-floor">
+        <span class="stack-label">1F</span>
+        <div class="stack-bar stack-lobby">Lobby / F&B</div>
+      </div>
+      <div class="stack-floor">
+        <span class="stack-label">B1</span>
+        <div class="stack-bar stack-amenity">Amenities</div>
+      </div>
+      <div class="stack-floor">
+        <span class="stack-label">B2-B8</span>
+        <div class="stack-bar stack-parking">
+          <span>Parking</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Public Spaces -->
+<section class="section section-light" id="public">
+  <div class="reveal">
+    <div class="section-label">05</div>
+    <h2 class="section-title">PUBLIC<br>SPACES</h2>
+    <div class="section-divider section-divider-light"></div>
+
+    <div class="space-card">
+      <div class="floor-tag">BASEMENT 1F</div>
+      <h3>부대시설</h3>
+      <div class="space-list">
+        <span class="space-chip">Screen Golf</span>
+        <span class="space-chip">Lounge</span>
+        <span class="space-chip">Yoga</span>
+        <span class="space-chip">Shared Kitchen</span>
+        <span class="space-chip">Management Office</span>
+        <span class="space-chip">Control Room</span>
+      </div>
+      <table class="space-table">
+        <tr><th>공간</th><th>면적</th><th>평수</th></tr>
+        <tr><td>오피스텔 부대시설</td><td>547 m²</td><td>165.4PY</td></tr>
+        <tr><td>기타 시설(방재실 등)</td><td>96.6 m²</td><td>29.2PY</td></tr>
+        <tr><td>합 계</td><td>643.5 m²</td><td>194.7PY</td></tr>
+      </table>
+    </div>
+
+    <div class="space-card">
+      <div class="floor-tag">1ST FLOOR</div>
+      <h3>로비 & 편의시설</h3>
+      <div class="space-list">
+        <span class="space-chip">Lobby</span>
+        <span class="space-chip">Shared Office</span>
+        <span class="space-chip">F&B</span>
+        <span class="space-chip">Shower & Toilet</span>
+        <span class="space-chip">Elevator Hall</span>
+        <span class="space-chip">Mail Box</span>
+      </div>
+      <table class="space-table">
+        <tr><th>공간</th><th>면적</th><th>평수</th></tr>
+        <tr><td>오피스텔</td><td>322.9 m²</td><td>97.6PY</td></tr>
+        <tr><td>근린생활시설</td><td>165 m²</td><td>50PY</td></tr>
+        <tr><td>합 계</td><td>488.5 m²</td><td>102.6PY</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Accommodation / Area Plan -->
+<section class="section section-dark" id="rooms-summary">
+  <div class="reveal">
+    <div class="section-label">06</div>
+    <h2 class="section-title section-title-dark">AREA PLAN</h2>
+    <div class="section-divider"></div>
+
+    <div class="area-summary">
+      <div class="area-total">
+        <div class="num">187</div>
+        <div class="unit">Total Rooms</div>
+      </div>
+
+      <div class="area-type-grid">
+        <div class="area-type-card">
+          <div class="type-name">A TYPE</div>
+          <div class="type-info">2~3인<br>39.93 m²</div>
+          <div class="type-count">68실</div>
+        </div>
+        <div class="area-type-card">
+          <div class="type-name">B TYPE</div>
+          <div class="type-info">4인<br>40.92 m²</div>
+          <div class="type-count">17실</div>
+        </div>
+        <div class="area-type-card">
+          <div class="type-name">C TYPE</div>
+          <div class="type-info">2인<br>48.21 m²</div>
+          <div class="type-count">17실</div>
+        </div>
+        <div class="area-type-card">
+          <div class="type-name">D TYPE</div>
+          <div class="type-info">3인<br>46.33 m²</div>
+          <div class="type-count">17실</div>
+        </div>
+        <div class="area-type-card">
+          <div class="type-name">D1 TYPE</div>
+          <div class="type-info">3인<br>40.35 m²</div>
+          <div class="type-count">17실</div>
+        </div>
+        <div class="area-type-card">
+          <div class="type-name">E TYPE</div>
+          <div class="type-info">2인<br>27.19 m²</div>
+          <div class="type-count">34실</div>
+        </div>
+        <div class="area-type-card">
+          <div class="type-name">F TYPE</div>
+          <div class="type-info">4인<br>45.04 m²</div>
+          <div class="type-count">17실</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Room Type Details -->
+<section class="section" id="rooms">
+  <div class="reveal">
+    <div class="section-label">07</div>
+    <h2 class="section-title">ACCOMMODATION</h2>
+    <div class="section-divider section-divider-light"></div>
+
+    <div class="room-type-nav">
+      <button class="room-type-btn active" onclick="showRoom('a1')">A-1</button>
+      <button class="room-type-btn" onclick="showRoom('a2')">A-2</button>
+      <button class="room-type-btn" onclick="showRoom('b')">B</button>
+      <button class="room-type-btn" onclick="showRoom('c')">C</button>
+      <button class="room-type-btn" onclick="showRoom('d')">D</button>
+      <button class="room-type-btn" onclick="showRoom('d1')">D-1</button>
+      <button class="room-type-btn" onclick="showRoom('e')">E</button>
+      <button class="room-type-btn" onclick="showRoom('f')">F</button>
+    </div>
+
+    <div class="room-panels">
+      <!-- A TYPE 01 -->
+      <div class="room-panel active" id="room-a1">
+        <div class="room-header">
+          <h3>A TYPE_01</h3>
+          <div class="room-meta">
+            <div class="area">39.93 m² / 12.10PY</div>
+            <div class="count">68세대</div>
+          </div>
+        </div>
+        <div class="room-tags">
+          <span class="room-tag people">2인</span>
+          <span class="room-tag traveler">여행객</span>
+          <span class="room-tag medical">메디컬</span>
+          <span class="room-tag living">1인주거</span>
+        </div>
+        <div class="room-zones">
+          <div class="room-zone relax">
+            <div class="zone-label">RELAXATION</div>
+            <div class="zone-items">베드 W1600<br>빌트인 옷장</div>
+          </div>
+          <div class="room-zone living-zone">
+            <div class="zone-label">LIVING</div>
+            <div class="zone-items">소파/테이블<br>스탠딩TV</div>
+          </div>
+        </div>
+        <div class="room-spec-grid">
+          <div class="room-spec"><div class="num">01</div><div class="name">베드 (W1600)<br>안쪽 배치 - 숙면 보장</div></div>
+          <div class="room-spec"><div class="num">02</div><div class="name">다이닝 테이블<br>(W2000×D900)</div></div>
+          <div class="room-spec"><div class="num">03</div><div class="name">거실 2~3인 소파<br>테이블/스탠딩TV</div></div>
+          <div class="room-spec"><div class="num">04</div><div class="name">빌트인 옷장</div></div>
+          <div class="room-spec"><div class="num">05</div><div class="name">세면대</div></div>
+          <div class="room-spec"><div class="num">06</div><div class="name">화장실/샤워실</div></div>
+          <div class="room-spec"><div class="num">07</div><div class="name">현관</div></div>
+          <div class="room-spec"><div class="num">08</div><div class="name">주방</div></div>
+        </div>
+      </div>
+
+      <!-- A TYPE 02 -->
+      <div class="room-panel" id="room-a2">
+        <div class="room-header">
+          <h3>A TYPE_02</h3>
+          <div class="room-meta">
+            <div class="area">39.93 m² / 12.10PY</div>
+            <div class="count">68세대</div>
+          </div>
+        </div>
+        <div class="room-tags">
+          <span class="room-tag people">2인 + 1인</span>
+          <span class="room-tag traveler">여행객</span>
+          <span class="room-tag medical">메디컬</span>
+          <span class="room-tag living">1인주거</span>
+        </div>
+        <div class="room-zones">
+          <div class="room-zone relax">
+            <div class="zone-label">RELAXATION</div>
+            <div class="zone-items">베드1 W1600<br>베드2 W1000</div>
+          </div>
+          <div class="room-zone living-zone">
+            <div class="zone-label">LIVING</div>
+            <div class="zone-items">다이닝 테이블<br>스탠딩TV</div>
+          </div>
+        </div>
+        <div class="room-spec-grid">
+          <div class="room-spec"><div class="num">01</div><div class="name">베드1 (W1600)<br>안쪽 배치</div></div>
+          <div class="room-spec"><div class="num">02</div><div class="name">베드2 (W1000)</div></div>
+          <div class="room-spec"><div class="num">03</div><div class="name">다이닝 테이블<br>(W2000×D900)/TV</div></div>
+          <div class="room-spec"><div class="num">04</div><div class="name">빌트인 옷장</div></div>
+          <div class="room-spec"><div class="num">05</div><div class="name">세면대</div></div>
+          <div class="room-spec"><div class="num">06</div><div class="name">화장실/샤워실</div></div>
+          <div class="room-spec"><div class="num">07</div><div class="name">현관</div></div>
+          <div class="room-spec"><div class="num">08</div><div class="name">주방</div></div>
+        </div>
+      </div>
+
+      <!-- B TYPE -->
+      <div class="room-panel" id="room-b">
+        <div class="room-header">
+          <h3>B TYPE</h3>
+          <div class="room-meta">
+            <div class="area">40.92 m² / 12.40PY</div>
+            <div class="count">17세대 · 2 ROOM</div>
+          </div>
+        </div>
+        <div class="room-tags">
+          <span class="room-tag people">2인 + 2인</span>
+          <span class="room-tag traveler">여행객</span>
+          <span class="room-tag medical">메디컬</span>
+        </div>
+        <div class="room-zones">
+          <div class="room-zone living-zone">
+            <div class="zone-label">LIVING AREA</div>
+            <div class="zone-items">다이닝 테이블<br>주방</div>
+          </div>
+          <div class="room-zone relax">
+            <div class="zone-label">RELAXATION</div>
+            <div class="zone-items">베드1 W1600<br>베드2 W1600</div>
+          </div>
+        </div>
+        <div class="room-spec-grid">
+          <div class="room-spec"><div class="num">01</div><div class="name">다이닝 테이블<br>(W1800×D800)/TV</div></div>
+          <div class="room-spec"><div class="num">02</div><div class="name">베드1 (W1600)</div></div>
+          <div class="room-spec"><div class="num">03</div><div class="name">베드2 (W1600)</div></div>
+          <div class="room-spec"><div class="num">04</div><div class="name">빌트인 옷장</div></div>
+          <div class="room-spec"><div class="num">05</div><div class="name">세면대</div></div>
+          <div class="room-spec"><div class="num">06</div><div class="name">화장실/샤워실</div></div>
+          <div class="room-spec"><div class="num">07</div><div class="name">현관</div></div>
+          <div class="room-spec"><div class="num">08</div><div class="name">주방</div></div>
+        </div>
+      </div>
+
+      <!-- C TYPE -->
+      <div class="room-panel" id="room-c">
+        <div class="room-header">
+          <h3>C TYPE</h3>
+          <div class="room-meta">
+            <div class="area">48.21 m² / 14.61PY</div>
+            <div class="count">17세대 · 2 ROOM</div>
+          </div>
+        </div>
+        <div class="room-tags">
+          <span class="room-tag people">2인</span>
+          <span class="room-tag traveler">여행객</span>
+          <span class="room-tag medical">메디컬</span>
+          <span class="room-tag living">1인주거</span>
+        </div>
+        <div class="room-zones">
+          <div class="room-zone living-zone">
+            <div class="zone-label">LIVING AREA</div>
+            <div class="zone-items">소파/테이블<br>라운지체어/TV</div>
+          </div>
+          <div class="room-zone relax">
+            <div class="zone-label">RELAXATION</div>
+            <div class="zone-items">베드 W1600<br>분리된 실</div>
+          </div>
+        </div>
+        <div class="room-spec-grid">
+          <div class="room-spec"><div class="num">01</div><div class="name">다이닝 테이블<br>(W2000×D800)</div></div>
+          <div class="room-spec"><div class="num">02</div><div class="name">거실 2~3인 소파<br>라운지체어/TV</div></div>
+          <div class="room-spec"><div class="num">03</div><div class="name">베드 (W1600)<br>분리된 실</div></div>
+          <div class="room-spec"><div class="num">04</div><div class="name">빌트인 옷장</div></div>
+          <div class="room-spec"><div class="num">05</div><div class="name">세면대</div></div>
+          <div class="room-spec"><div class="num">06</div><div class="name">화장실/샤워실</div></div>
+          <div class="room-spec"><div class="num">07</div><div class="name">현관</div></div>
+          <div class="room-spec"><div class="num">08</div><div class="name">주방</div></div>
+        </div>
+      </div>
+
+      <!-- D TYPE -->
+      <div class="room-panel" id="room-d">
+        <div class="room-header">
+          <h3>D TYPE</h3>
+          <div class="room-meta">
+            <div class="area">46.33 m² / 14.04PY</div>
+            <div class="count">17세대 · 2 ROOM</div>
+          </div>
+        </div>
+        <div class="room-tags">
+          <span class="room-tag people">2인 + 1인</span>
+          <span class="room-tag traveler">여행객</span>
+          <span class="room-tag medical">메디컬</span>
+          <span class="room-tag living">1인주거</span>
+        </div>
+        <div class="room-zones">
+          <div class="room-zone relax">
+            <div class="zone-label">RELAXATION</div>
+            <div class="zone-items">베드1 W1600<br>드레스룸</div>
+          </div>
+          <div class="room-zone living-zone">
+            <div class="zone-label">LIVING</div>
+            <div class="zone-items">다이닝 테이블<br>서재(베드2/데스크)</div>
+          </div>
+        </div>
+        <div class="room-spec-grid">
+          <div class="room-spec"><div class="num">01</div><div class="name">베드1 (W1600)<br>드레스룸·거실 인접</div></div>
+          <div class="room-spec"><div class="num">02</div><div class="name">다이닝 테이블<br>(W1800×D800)/벽걸이TV</div></div>
+          <div class="room-spec"><div class="num">03</div><div class="name">서재 (베드2 W1000<br>데스크/체어)</div></div>
+          <div class="room-spec"><div class="num">04</div><div class="name">드레스룸</div></div>
+          <div class="room-spec"><div class="num">05</div><div class="name">세면대</div></div>
+          <div class="room-spec"><div class="num">06</div><div class="name">화장실/샤워실</div></div>
+          <div class="room-spec"><div class="num">07</div><div class="name">현관</div></div>
+          <div class="room-spec"><div class="num">08</div><div class="name">주방</div></div>
+        </div>
+      </div>
+
+      <!-- D-1 TYPE -->
+      <div class="room-panel" id="room-d1">
+        <div class="room-header">
+          <h3>D-1 TYPE</h3>
+          <div class="room-meta">
+            <div class="area">40.35 m² / 12.23PY</div>
+            <div class="count">17세대 · 2 ROOM</div>
+          </div>
+        </div>
+        <div class="room-tags">
+          <span class="room-tag people">2인 + 1인</span>
+          <span class="room-tag traveler">여행객</span>
+          <span class="room-tag medical">메디컬</span>
+          <span class="room-tag living">1인주거</span>
+        </div>
+        <div class="room-zones">
+          <div class="room-zone living-zone">
+            <div class="zone-label">LIVING AREA</div>
+            <div class="zone-items">소파/라운지체어<br>다이닝 테이블/TV</div>
+          </div>
+          <div class="room-zone relax">
+            <div class="zone-label">RELAXATION</div>
+            <div class="zone-items">베드1 W1500<br>베드2 W1000</div>
+          </div>
+        </div>
+        <div class="room-spec-grid">
+          <div class="room-spec"><div class="num">01</div><div class="name">베드1 (W1500)</div></div>
+          <div class="room-spec"><div class="num">02</div><div class="name">거실 2~3인 소파<br>라운지체어</div></div>
+          <div class="room-spec"><div class="num">03</div><div class="name">다이닝 테이블<br>(W1400×D800)/TV</div></div>
+          <div class="room-spec"><div class="num">04</div><div class="name">베드2 (W1000)<br>수납장</div></div>
+          <div class="room-spec"><div class="num">05</div><div class="name">빌트인 옷장/상부장</div></div>
+          <div class="room-spec"><div class="num">06</div><div class="name">세면대</div></div>
+          <div class="room-spec"><div class="num">07</div><div class="name">화장실/샤워실</div></div>
+          <div class="room-spec"><div class="num">08</div><div class="name">현관</div></div>
+        </div>
+      </div>
+
+      <!-- E TYPE -->
+      <div class="room-panel" id="room-e">
+        <div class="room-header">
+          <h3>E TYPE</h3>
+          <div class="room-meta">
+            <div class="area">27.19 m² / 8.24PY</div>
+            <div class="count">34세대 · 1.5 ROOM</div>
+          </div>
+        </div>
+        <div class="room-tags">
+          <span class="room-tag people">2인</span>
+          <span class="room-tag traveler">여행객</span>
+          <span class="room-tag medical">메디컬</span>
+          <span class="room-tag living">1인주거</span>
+        </div>
+        <div class="room-spec-grid">
+          <div class="room-spec"><div class="num">01</div><div class="name">베드 (W1600)<br>데스크/체어</div></div>
+          <div class="room-spec"><div class="num">02</div><div class="name">다이닝 테이블<br>(W1500×D600)/TV</div></div>
+          <div class="room-spec"><div class="num">03</div><div class="name">라운지체어<br>사이드테이블</div></div>
+          <div class="room-spec"><div class="num">04</div><div class="name">드레스룸</div></div>
+          <div class="room-spec"><div class="num">05</div><div class="name">세면대</div></div>
+          <div class="room-spec"><div class="num">06</div><div class="name">화장실/샤워실</div></div>
+          <div class="room-spec"><div class="num">07</div><div class="name">현관</div></div>
+          <div class="room-spec"><div class="num">08</div><div class="name">주방</div></div>
+        </div>
+      </div>
+
+      <!-- F TYPE -->
+      <div class="room-panel" id="room-f">
+        <div class="room-header">
+          <h3>F TYPE</h3>
+          <div class="room-meta">
+            <div class="area">45.04 m² / 13.65PY</div>
+            <div class="count">17세대 · 2 ROOM</div>
+          </div>
+        </div>
+        <div class="room-tags">
+          <span class="room-tag people">2인 + 2인</span>
+          <span class="room-tag traveler">여행객</span>
+          <span class="room-tag medical">메디컬</span>
+          <span class="room-tag living">1인주거</span>
+        </div>
+        <div class="room-zones">
+          <div class="room-zone relax">
+            <div class="zone-label">RELAXATION</div>
+            <div class="zone-items">베드1 W1600<br>베드2 W1600</div>
+          </div>
+          <div class="room-zone living-zone">
+            <div class="zone-label">LIVING</div>
+            <div class="zone-items">다이닝 테이블<br>벽걸이 TV</div>
+          </div>
+        </div>
+        <div class="room-spec-grid">
+          <div class="room-spec"><div class="num">01</div><div class="name">베드1 (W1600)</div></div>
+          <div class="room-spec"><div class="num">02</div><div class="name">베드2 (W1600)</div></div>
+          <div class="room-spec"><div class="num">03</div><div class="name">다이닝 테이블<br>(W1800×D800)/TV</div></div>
+          <div class="room-spec"><div class="num">04</div><div class="name">드레스룸</div></div>
+          <div class="room-spec"><div class="num">05</div><div class="name">세면대</div></div>
+          <div class="room-spec"><div class="num">06</div><div class="name">화장실/샤워실</div></div>
+          <div class="room-spec"><div class="num">07</div><div class="name">현관</div></div>
+          <div class="room-spec"><div class="num">08</div><div class="name">주방</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Appendix -->
+<section class="section section-dark" id="appendix">
+  <div class="reveal">
+    <div class="section-label">08</div>
+    <h2 class="section-title section-title-dark">APPENDIX</h2>
+    <div class="section-divider"></div>
+    <p class="section-desc section-desc-light">타겟별 수요에 따른 맞춤 시스템 전략</p>
+
+    <div class="appendix-category">
+      <h3>BEDROOM</h3>
+      <div class="appendix-grid">
+        <div class="appendix-item">
+          <div class="item-icon">🛏</div>
+          <div class="item-name">모션베드</div>
+          <div class="item-desc">각도 조절 가능</div>
+        </div>
+        <div class="appendix-item">
+          <div class="item-icon">🛡</div>
+          <div class="item-name">안전 난간 / 손잡이</div>
+          <div class="item-desc">메디컬 케어 대응</div>
+        </div>
+        <div class="appendix-item">
+          <div class="item-icon">🌙</div>
+          <div class="item-name">암막커튼</div>
+          <div class="item-desc">완벽한 수면 환경</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="appendix-category">
+      <h3>LIVING ROOM</h3>
+      <div class="appendix-grid">
+        <div class="appendix-item">
+          <div class="item-icon">💡</div>
+          <div class="item-name">리모컨 전등</div>
+          <div class="item-desc">편의 조명 제어</div>
+        </div>
+        <div class="appendix-item">
+          <div class="item-icon">🪑</div>
+          <div class="item-name">오토만 & 암체어</div>
+          <div class="item-desc">편안한 휴식</div>
+        </div>
+        <div class="appendix-item">
+          <div class="item-icon">🧳</div>
+          <div class="item-name">러기지랙</div>
+          <div class="item-desc">여행객 필수</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="appendix-category">
+      <h3>STUDY</h3>
+      <div class="appendix-grid">
+        <div class="appendix-item">
+          <div class="item-icon">🖥</div>
+          <div class="item-name">모션데스크</div>
+          <div class="item-desc">높이 조절 가능</div>
+        </div>
+        <div class="appendix-item">
+          <div class="item-icon">👂</div>
+          <div class="item-name">이어플러그</div>
+          <div class="item-desc">집중력 향상</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="appendix-category">
+      <h3>DAILY SUPPLIES</h3>
+      <div class="appendix-grid">
+        <div class="appendix-item">
+          <div class="item-icon">✏</div>
+          <div class="item-name">오피스 키트</div>
+          <div class="item-desc">증정 or 대여</div>
+        </div>
+        <div class="appendix-item">
+          <div class="item-icon">🩹</div>
+          <div class="item-name">메디컬 케어제품</div>
+          <div class="item-desc">증정</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-logo">ASTY CABIN</div>
+  <div class="footer-sub">CARAMEL LOUNGE</div>
+  <div class="footer-divider"></div>
+  <div class="footer-info">
+    서울특별시 송파구 가락동 99번지<br>
+    오피스텔 · 근린생활시설<br>
+    지상 18층 / 지하 8층 · 187실
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-copy">© 2026 CARAMEL LOUNGE. All rights reserved.</div>
+</footer>
+
+<script>
+// Loading Screen
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loadingScreen').classList.add('hidden');
+  }, 1800);
+});
+
+// Navigation scroll effect
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// Mobile menu
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+
+menuBtn.addEventListener('click', () => {
+  menuBtn.classList.toggle('active');
+  mobileMenu.classList.toggle('active');
+  document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+});
+
+function closeMenu() {
+  menuBtn.classList.remove('active');
+  mobileMenu.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Room type tabs
+function showRoom(type) {
+  document.querySelectorAll('.room-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.room-type-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('room-' + type).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+reveals.forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>
